@@ -9,7 +9,6 @@
         <label for="registerat-input" class="col col-form-label">Data da Partida</label>
       </div>
 
-      <!-- [(ngModel)]="ngbDataSelected" -->
       <div class="col-8">
         <div class="input-group">
           <input type="text"
@@ -38,8 +37,6 @@
         <label for="score" class="col col-form-label">Pontuação</label>
       </div>
       
-      <!-- [(ngModel)]="model.Score"  -->
-      
       <div class="col-8">
         <input [ngClass]="{ 'is-invalid': isFormSaved && regForm.score.errors }" formControlName="score" 
                 class="form-control" type="number"id="score" name="score" placeholder="Enter score">
@@ -55,7 +52,6 @@
         <label for="selectPlayer" class="col col-form-label">Jogador</label>
       </div>
       
-      <!-- [(ngModel)]="model.PlayerId" -->
       <div class="col-8">
         <select [ngClass]="{ 'is-invalid': isFormSaved && regForm.selectPlayer.errors }" formControlName="selectPlayer" name="selectPlayer" class="form-control">
           <option class="dropdown-item" disabled selected value="undefined">Selecione um Jogador</option>
