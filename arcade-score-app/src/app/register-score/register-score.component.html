@@ -3,12 +3,13 @@
     <h3>Registrar Pontuação</h3>
   </div>
   <hr>
-  <form (ngSubmit)="onSave()">
+  <form [formGroup]="registerForm" (ngSubmit)="onSave()">
     <div class="form-group row">
       <div class="col-2">
         <label for="registerat-input" class="col col-form-label">Data da Partida</label>
       </div>
 
+      <!-- [(ngModel)]="ngbDataSelected" -->
       <div class="col-8">
         <div class="input-group">
           <input type="text"
@@ -16,7 +17,8 @@
                   rInputMask="99-99-9999"
                   placeholder="dd-mm-yyyy"
                   name="registerat"
-                  [(ngModel)]="ngbDataSelected"
+                  [ngClass]="{ 'is-invalid': isFormSaved && regForm.dob.errors }"
+                  formControlName="dob"
                   (dateSelect)="onDateSelect($event)"
                   ngbDatepicker #dob="ngbDatepicker">
           <span class="input-group-text" (click)="dob.toggle()" type="button">
@@ -26,6 +28,8 @@
             </svg>
           </span>
         </div>
+        <div *ngIf="regForm.dob.errors" class="invalid-feedback"></div>
+        <div *ngIf="isFormSaved && regForm.dob.errors.required" class="text-danger">Campo: Data da partida é obrigatório</div>
       </div>
     </div>
 
@@ -34,23 +38,32 @@
         <label for="score" class="col col-form-label">Pontuação</label>
       </div>
       
+      <!-- [(ngModel)]="model.Score"  -->
+      
       <div class="col-8">
-        <input class="form-control" type="text" [(ngModel)]="model.Score" id="score" name="score" placeholder="Enter score">
+        <input [ngClass]="{ 'is-invalid': isFormSaved && regForm.score.errors }" formControlName="score" 
+                class="form-control" type="number"id="score" name="score" placeholder="Enter score">
+          
+          <div *ngIf="regForm.score.errors" class="invalid-feedback"></div>
+          <div *ngIf="isFormSaved && regForm.score.errors.required" class="text-danger">Campo: Pontuação é obrigatório</div>
       </div>
        
     </div>
 
     <div class="form-group row">
       <div class="col-2">
-        <label for="selectPlayers" class="col col-form-label">Jogador</label>
+        <label for="selectPlayer" class="col col-form-label">Jogador</label>
       </div>
       
+      <!-- [(ngModel)]="model.PlayerId" -->
       <div class="col-8">
-        <select name="selectPlayers" class="form-control" [(ngModel)]="model.PlayerId">
+        <select [ngClass]="{ 'is-invalid': isFormSaved && regForm.selectPlayer.errors }" formControlName="selectPlayer" name="selectPlayer" class="form-control">
           <option class="dropdown-item" disabled selected value="undefined">Selecione um Jogador</option>
           <option *ngFor="let player of players;let x = index" [ngValue]="player.PlayerId" class="dropdown-item">
             {{player.Name}}</option>
         </select>
+        <div *ngIf="regForm.selectPlayer.errors" class="invalid-feedback"></div>
+        <div *ngIf="isFormSaved && regForm.selectPlayer.errors.required" class="text-danger">Campo: Jogador é obrigatório</div>
       </div>
     </div>
 

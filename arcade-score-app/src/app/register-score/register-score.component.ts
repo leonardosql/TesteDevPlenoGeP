@@ -25,6 +25,7 @@ export class RegisterScoreComponent implements OnInit {
   ngbDataSelected: NgbDateStruct = null;
 
   registerForm: FormGroup;
+  isFormSaved = false;
 
 
   constructor(private fb: FormBuilder, private _api: ApiService) {
@@ -35,9 +36,7 @@ export class RegisterScoreComponent implements OnInit {
 
     this.registerForm = this.fb.group({
       score: ['', Validators.compose([Validators.required])],
-      // emailId: ['', Validators.compose([Validators.required,
-      // Validators.pattern('^[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')])],
-      // mobile: ['', Validators.compose([Validators.required, Validators.maxLength(10), Validators.pattern('^[0-9]+$')])],
+      selectPlayer: ['', Validators.compose([Validators.required])],
       dob: ['', Validators.compose([Validators.required])]
     });
 
@@ -47,7 +46,6 @@ export class RegisterScoreComponent implements OnInit {
         this.selfClosingAlert.closeHandler();
       }
     });
-
 
     this._api.getAllPlayers()
       .subscribe(res => {
@@ -60,7 +58,15 @@ export class RegisterScoreComponent implements OnInit {
 
   onSave() {
 
-    //this.model.RegistredAt = new Date(this.ngbDataSelected.year, this.ngbDataSelected.month - 1, this.ngbDataSelected.day);
+    this.isFormSaved = true;
+    if (this.registerForm.invalid) {
+      return;
+    }
+    else{
+      let test = this.registerForm.value;
+      this.model.Score = this.registerForm.value.score;
+      this.model.PlayerId = this.registerForm.value.selectPlayer;
+    }
 
     this._api.registerScore(this.model)
       .subscribe(res => {
@@ -74,6 +80,8 @@ export class RegisterScoreComponent implements OnInit {
   cleanModel(){
     this.model = new Match();
     this.ngbDataSelected = null;
+    this.isFormSaved = false;
+    this.registerForm.reset();
   }
 
   onDateSelect($event){
@@ -81,8 +89,9 @@ export class RegisterScoreComponent implements OnInit {
     this.model.RegistredAt = new Date($event.year, $event.month - 1, $event.day);
   }
 
-  get f() { return this.registerForm.controls; }
-
+  get regForm() {
+    return this.registerForm.controls;
+  }
   registerFormSubmit(value) {
     console.log(value.dob.format('DD-MMM-YYYY'));
   }
