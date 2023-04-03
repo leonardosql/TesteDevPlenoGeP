@@ -1,3 +1,37 @@
-<p>
-  modal works!
-</p>
+<div class="modal-header">
+  <h5 class="modal-title">Estatísticas Jogador - {{item.Name}}</h5>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <table class="table">
+    <tr>
+      <td>Partidas Jogadas</td>
+      <th class="text-left">{{ item.MatchesCount }}</th>
+    </tr>
+    <tr>
+      <td>AverageScore</td>
+      <th class="text-left">{{ item.AverageScore }}</th>
+    </tr>
+    <tr>
+      <td>HighestScore</td>
+      <th class="text-left">{{ item.HighestScore }}</th>
+    </tr>
+    <tr>
+      <td>LowestScore</td>
+      <th class="text-left">{{ item.LowestScore }}</th>
+    </tr>
+    <tr>
+      <td>Quantidade de Vezes que bateu o próprio recorde</td>
+      <th class="text-left">{{ item.RecordTime }}</th>
+    </tr>
+    <tr>
+      <td>Tempo que joga Meses?</td>
+      <th class="text-left">{{ item.GameTime }}</th>
+    </tr>
+  </table>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+</div>
